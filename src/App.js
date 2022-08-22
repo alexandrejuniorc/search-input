@@ -3,7 +3,6 @@ import axios from 'axios';
 
 function App() {
   const [repositories, setRepositories] = useState([]);
-  const [filteredRepos, setFilteredRepos] = useState([]);
   const [search, setSearch] = useState('');
 
   console.log('Renderizou');
@@ -15,9 +14,11 @@ function App() {
       .catch((error) => console.log(error));
   }, []);
 
-  useEffect(() => {
-    setFilteredRepos(repositories.filter((repo) => repo.name.includes(search)));
-  }, [search]);
+  // se o campo de busca for maior que 0 ele irá filtrar no estado do objeto e verificar se existe um name igual, se sim irá incluir nessa variável
+  const filteredRepos =
+    search.length > 0
+      ? repositories.filter((repo) => repo.name.includes(search))
+      : [];
 
   return (
     <div>
